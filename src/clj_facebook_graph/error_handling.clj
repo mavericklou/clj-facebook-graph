@@ -15,7 +15,7 @@
  assigned to a keyword to identify the error easier. At the moment the
  map only include two errors which are relevant for authentication and authorisation."}
  facebook-errors {
-                  :OAuthException {"Error validating access token."
+                  :OAuthException {"Error validating access token"
                                    :invalid-access-token
                                    "An access token is required to request this resource."
                                    :access-token-required
