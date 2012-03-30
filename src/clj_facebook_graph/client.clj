@@ -8,6 +8,7 @@
 
 (ns clj-facebook-graph.client
   "A client for the Facebook Graph API based on clj-http and clj-oauth2."
+  (:refer-clojure :exclude [get])
   (:use [clj-facebook-graph.helper :only [wrap-exceptions facebook-base-url facebook-fql-base-url]]
         [clj-facebook-graph.auth :only [wrap-facebook-access-token]]
         [clj-facebook-graph.error-handling :only [wrap-facebook-exceptions]]
