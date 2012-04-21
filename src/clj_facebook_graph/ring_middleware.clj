@@ -70,7 +70,7 @@
               session (dissoc session :return-to)]
           (if return-to
             (assoc (redirect return-to) :session session)
-            (callback-handler request)))
+            (callback-handler (assoc request :session session))))
         (handler request)))))
 
 (defn wrap-facebook-access-token-required
