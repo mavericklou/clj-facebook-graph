@@ -11,7 +11,7 @@
   (:use [clojure.data.json :only [read-json read-json-from Read-JSON-From]]
         [clojure.java.io :only [reader]]
         [clj-http.client :only [unexceptional-status?]]
-        [clj-oauth2.uri :only [make-uri]]
+        [clj-facebook-graph.uri :only [make-uri]]
         [clojure.string :only [blank?]]
         ring.middleware.params)
   (:import
