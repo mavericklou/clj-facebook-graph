@@ -1,4 +1,4 @@
-(defproject timewarrior/clj-facebook-graph "0.5.1"
+(defproject timewarrior/clj-facebook-graph "0.5.2"
   :description "A Clojure client for the Facebook Graph API."
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [org.clojure/data.json "0.1.1"]

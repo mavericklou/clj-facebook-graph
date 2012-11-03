@@ -39,6 +39,10 @@
   (assoc *facebook-auth*
     :query-param (:access-query-param facebook-oauth2-endpoint) :token-type "draft-10"))
 
+(defn has-facebook-auth[]
+  "Returns whether there is an existing binding for facebook-auth"
+  ((complement nil?) *facebook-auth*))
+
 (defn wrap-facebook-access-token [client]
   "Ring-style middleware to add the Facebook access token to the request, when it is found in the thread bounded *facebook-auth* variable.
    It doesn't add the access_token query parameter, if the URL doesn't start with the facebook-base-url (https://graph.facebook.com). So

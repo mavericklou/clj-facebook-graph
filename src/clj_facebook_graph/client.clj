@@ -14,7 +14,8 @@
         [clj-facebook-graph.error-handling :only [wrap-facebook-exceptions]]
         [clojure.data.json :only [read-json]] 
         [clj-oauth2.client :only [wrap-oauth2]])
-  (:require [clj-http.client :as client]))
+  (:require [clj-http.client :as client]
+            [clj-facebook-graph.auth :as auth]))
 
 (defn wrap-facebook-url-builder [client]
   "Offers some convenience by assemble a Facebook Graph API URL from a vector of keywords or strings.
@@ -30,6 +31,10 @@
               url (apply str (interpose "/" (conj url-parts-as-str facebook-base-url)))]
           (client (assoc req :url url)))
         (client req)))))
+
+(defn has-facebook-auth[]
+  "Returns whether there is an existing binding for facebook-auth"
+  (auth/has-facebook-auth))
 
 (defn wrap-json-response-conversion [client]
   "Automatically transforms the body of a response of a Facebook Graph API request from JSON to a Clojure
