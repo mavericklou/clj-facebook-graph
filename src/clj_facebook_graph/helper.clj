@@ -8,12 +8,11 @@
 
 (ns clj-facebook-graph.helper
   "Some helper functions."
-  (:use [clojure.data.json :only [read-json read-json-from Read-JSON-From]]
-        [clojure.java.io :only [reader]]
-        [clj-http.client :only [unexceptional-status?]]
+  (:use [clj-http.client :only [unexceptional-status?]]
         [clj-facebook-graph.uri :only [make-uri]]
         [clojure.string :only [blank?]]
         ring.middleware.params)
+  (:require [cheshire.core :as json])
   (:import
    (java.io PushbackReader ByteArrayInputStream InputStreamReader)))
 
@@ -21,12 +20,14 @@
 
 (def facebook-fql-base-url "https://api.facebook.com/method/fql.query")
 
-(extend-type (Class/forName "[B")
-  Read-JSON-From
-  (read-json-from [input keywordize? eof-error? eof-value]
-    (read-json-from (PushbackReader. (InputStreamReader.
-                                      (ByteArrayInputStream. input)))
-                    keywordize? eof-error? eof-value)))
+(defn read-json-from-body
+  "convert body to a reader to be compatible with clojure.data.json 0.2.1
+   In case body is a byte array, aka class [B"
+  [body]
+  (if (instance? String body)
+    (json/parse-string body true)
+    (with-open [reader (clojure.java.io/reader body)]
+      (json/parse-stream reader true))))
 
 (defn build-url [request]
   "Builds a URL string which corresponds to the information of the request."

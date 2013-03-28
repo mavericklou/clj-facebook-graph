@@ -9,10 +9,9 @@
 (ns clj-facebook-graph.client
   "A client for the Facebook Graph API based on clj-http and clj-oauth2."
   (:refer-clojure :exclude [get])
-  (:use [clj-facebook-graph.helper :only [wrap-exceptions facebook-base-url facebook-fql-base-url]]
+  (:use [clj-facebook-graph.helper] 
         [clj-facebook-graph.auth :only [wrap-facebook-access-token]]
         [clj-facebook-graph.error-handling :only [wrap-facebook-exceptions]]
-        [clojure.data.json :only [read-json]] 
         [clj-oauth2.client :only [wrap-oauth2]])
   (:require [clj-http.client :as client]
             [clj-facebook-graph.auth :as auth]))
@@ -47,7 +46,7 @@
                (or
                 (.startsWith content-type "text/javascript")
                 (.startsWith content-type "application/json")))
-        (assoc resp :body (read-json (:body resp)))
+        (assoc resp :body (read-json-from-body (:body resp)))
         resp))))
 
 (defn wrap-facebook-data-extractor [client]
